@@ -2,6 +2,6 @@ package org.example
 
 
 fun main() {
-    println("Simple password: ${Solution().simplePassword()}")
-    println("Advanced password: ${Solution().advancedPassword()}")
+    val (simple, advanced) = Solution().computePasswords()
+    println("Simple password (part-one): $simple\nAdvanced password (part-two): $advanced")
 }

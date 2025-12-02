@@ -1,46 +1,25 @@
 package org.example
 
 import java.io.File
-import java.io.InputStream
 import java.util.*
 
 class Solution {
     var inputPath = "day-01-secret-entrance/src/main/resources/input.txt"
 
-    fun simplePassword(dial: Int = 50, range: Int = 100): Int {
-        var password = 0
+    fun computePasswords(dial: Int = 50, range: Int = 100): Pair<Int, Int> {
+        var simplePassword = 0
+        var advancePassword = 0
         var dial = dial
-        val inputStream: InputStream = File(inputPath).inputStream()
-        println("The dial starts by pointing at $dial")
-
-        inputStream.bufferedReader().useLines { lines ->
+        File(inputPath).inputStream().bufferedReader().useLines { lines ->
             lines.forEach {
                 val rotation = parseRotation(it)
+                advancePassword += computePassesByZero(rotation, dial, range)
                 dial = moveDial(dial, rotation, range)
-                if (dial == 0) password++
-
-                println("The dial is rotated $it to point at $dial")
+                simplePassword += if (dial == 0) 1 else 0
             }
         }
-        return password
-    }
 
-    fun advancedPassword(dial: Int = 50, range: Int = 100): Int {
-        var password = 0
-        var dial = dial
-        val inputStream: InputStream = File(inputPath).inputStream()
-        println("The dial starts by pointing at $dial")
-
-        inputStream.bufferedReader().useLines { lines ->
-            lines.forEach {
-                val rotation = parseRotation(it)
-                password += computePassesByZero(rotation, dial, range)
-                dial = moveDial(dial, rotation, range)
-
-                println("The dial is rotated $it to point at $dial")
-            }
-        }
-        return password
+        return Pair(simplePassword, advancePassword)
     }
 
     private fun moveDial(dial: Int, rotation: Int, range: Int): Int =
