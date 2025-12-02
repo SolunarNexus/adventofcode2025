@@ -32,12 +32,12 @@ class Solution {
             dial.minus(1).floorDiv(range) - dial.minus(1).plus(rotation).floorDiv(range)
         }
 
-    private fun parseRotation(string: String): Int =
-        if (string.startsWith('L')) {
-            -string.substring(1).toInt()
-        } else if (string.startsWith('R')) {
-            string.substring(1).toInt()
+    private fun parseRotation(rotation: String): Int =
+        if (rotation.startsWith('L')) {
+            -rotation.substring(1).toInt()
+        } else if (rotation.startsWith('R')) {
+            rotation.substring(1).toInt()
         } else {
-            throw InputMismatchException("Invalid input: $string")
+            throw InputMismatchException("Invalid input: $rotation")
         }
 }
