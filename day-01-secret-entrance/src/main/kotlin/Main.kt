@@ -2,6 +2,6 @@ package org.example
 
 
 fun main() {
-    val password = Solution().password()
-    println("Password: $password")
+    println("Simple password: ${Solution().simplePassword()}")
+    println("Advanced password: ${Solution().advancedPassword()}")
 }
