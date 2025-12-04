@@ -1,7 +1,6 @@
 package org.example
 
 fun main() {
-    val invalidIDs = Solution().invalidIDs()
-    println("Invalid IDs: ${invalidIDs.joinToString { it.toString()} }}")
-    println(invalidIDs.sum())
+    Solution().idsOfMultipleEqualSequences().forEach { println("$it") }
+    println("Sum of IDs: ${Solution().sumOfInvalidIDs()}")
 }
