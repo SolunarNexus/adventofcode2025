@@ -21,8 +21,36 @@ class Solution {
         DIAGONAL_RIGHT_DOWN(1, 1)
     }
 
+    fun allRemovableRolls(): Int {
+        val grid = File(inputPath).inputStream().bufferedReader().readLines().toMutableList()
+        var removableRolls = 0
+
+        do {
+            val accessibleRollsCount = removeAccessibleRolls(grid)
+            removableRolls += accessibleRollsCount
+        } while (accessibleRollsCount > 0)
+
+        println("Grid after removing all possible rolls:")
+        grid.forEach { println(it) }
+        return removableRolls
+    }
+
+    private fun removeAccessibleRolls(grid: MutableList<String>): Int {
+        var removableRolls = 0
+
+        for (row in 0..<grid.size) {
+            for (col in 0..<grid[row].length) {
+                if (isAccessibleRollCell(grid, row, col)) {
+                    removableRolls++
+                    grid[row] = grid[row].replaceRange(col, col + 1, ".")
+                }
+            }
+        }
+        return removableRolls
+    }
+
     fun accessibleRolls(): Int {
-        val grid = File(inputPath).inputStream().bufferedReader().readLines()
+        val grid = File(inputPath).inputStream().bufferedReader().readLines().toList()
         var accessibleRollsCount = 0
 
         for (row in 0..<grid.size) {
