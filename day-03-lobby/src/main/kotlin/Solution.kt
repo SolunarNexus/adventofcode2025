@@ -31,10 +31,12 @@ class Solution {
         for (i in 0..<bank.length) {
             val current = bank[i]
 
+            // If the number of batteries does not fit between the actual index and bank's end, process as many least significant digits as possible
             for (j in joltageStartIdx(i, bank.length, batteries)..<batteries) {
                 if (joltageDigits[j] < current) {
                     joltageDigits[j] = current
-                    resetJoltageCountersFrom(joltageDigits, j + 1)
+                    // Reset all successors of the current digit
+                    joltageDigits.subList(j + 1, joltageDigits.size).fill('0')
                     break
                 }
             }
@@ -44,11 +46,5 @@ class Solution {
 
     private fun joltageStartIdx(idx: Int, bankLength: Int, batteries: Int): Int {
         return maxOf(0, idx - bankLength + batteries)
-    }
-
-    private fun resetJoltageCountersFrom(joltage: MutableList<Char>, idx: Int) {
-        for (i in idx..<joltage.size) {
-            joltage[i] = '0'
-        }
     }
 }
