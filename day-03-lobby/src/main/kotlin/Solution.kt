@@ -18,25 +18,28 @@ class Solution {
         var totalJoltage = 0L
 
         for (bank: String in banks) {
-            val joltageDigits = MutableList(batteries) { '0' }
-
-            for (i in 0..<bank.length) {
-                val current = bank[i]
-
-                for (j in joltageStartIdx(i, bank.length, batteries)..<batteries) {
-                    if (joltageDigits[j] < current) {
-                        joltageDigits[j] = current
-                        resetJoltageCountersFrom(joltageDigits, j + 1)
-                        break
-                    }
-                }
-            }
-
-            val joltage = joltageDigits.joinToString("").toLong()
+            val joltage = computeJoltage(bank, batteries)
             println("Joltage for $bank is $joltage")
             totalJoltage += joltage
         }
         return totalJoltage
+    }
+
+    private fun computeJoltage(bank: String, batteries: Int): Long {
+        val joltageDigits = MutableList(batteries) { '0' }
+
+        for (i in 0..<bank.length) {
+            val current = bank[i]
+
+            for (j in joltageStartIdx(i, bank.length, batteries)..<batteries) {
+                if (joltageDigits[j] < current) {
+                    joltageDigits[j] = current
+                    resetJoltageCountersFrom(joltageDigits, j + 1)
+                    break
+                }
+            }
+        }
+        return joltageDigits.joinToString("").toLong()
     }
 
     private fun joltageStartIdx(idx: Int, bankLength: Int, batteries: Int): Int {
