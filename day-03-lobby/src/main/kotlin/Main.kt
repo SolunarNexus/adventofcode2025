@@ -2,20 +2,22 @@ package org.example
 
 fun main() {
     val solution = Solution(test = false)
-    val totalJoltage = solution.totalJoltage()
-    println("Total joltage is $totalJoltage")
+    val part1 = solution.totalJoltage(2)
+    val part2 = solution.totalJoltage(12)
+    println("Part 1 total joltage is $part1")
+    println("Part 2 total joltage is $part2")
 
     if (solution.isTest) {
-        val expectedTotalJoltage = 357L
-        assert(
-            totalJoltage == expectedTotalJoltage,
-            { "Incorrect total joltage. Was $totalJoltage, expected $expectedTotalJoltage" })
+        assertResults(357L, part1, "one")
+        assertResults(3121910778619L, part2, "two")
         println("Solution verified for TEST")
     } else {
-        val expectedTotalJoltage = 17113L
-        assert(
-            totalJoltage == expectedTotalJoltage,
-            { "Incorrect total joltage. Was $totalJoltage, expected $expectedTotalJoltage" })
+        assertResults(17113L, part1, "one")
+        assertResults(169709990062889L, part2, "two")
         println("Solution verified for PROD")
     }
+}
+
+fun assertResults(expected: Long, actual: Long, part: String){
+    assert(expected == actual, { "Incorrect total joltage for part $part. Was $actual, expected $expected" })
 }

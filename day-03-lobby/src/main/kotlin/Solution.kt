@@ -12,32 +12,40 @@ class Solution {
         this.isTest = test
     }
 
-    fun totalJoltage(): Long {
+    fun totalJoltage(batteries: Int): Long {
         val inputPath: String = if (isTest) testInputPath else inputPath
         val banks = File(inputPath).inputStream().bufferedReader().readLines()
         var totalJoltage = 0L
 
         for (bank: String in banks) {
-            val it = bank.drop(1).iterator()
-            var firstBattery = bank.first()
-            var secondBattery = '0'
+            val joltageDigits = MutableList(batteries) { '0' }
 
-            while (it.hasNext()) {
-                val current = it.next()
+            for (i in 0..<bank.length) {
+                val current = bank[i]
 
-                if (it.hasNext() && current > firstBattery) {
-                    firstBattery = current
-                    secondBattery = '0'
-                } else if (current > secondBattery) {
-                    secondBattery = current
+                for (j in joltageStartIdx(i, bank.length, batteries)..<batteries) {
+                    if (joltageDigits[j] < current) {
+                        joltageDigits[j] = current
+                        resetJoltageCountersFrom(joltageDigits, j + 1)
+                        break
+                    }
                 }
             }
 
-            val joltage: Int = String(charArrayOf(firstBattery, secondBattery)).toInt()
+            val joltage = joltageDigits.joinToString("").toLong()
             println("Joltage for $bank is $joltage")
             totalJoltage += joltage
         }
-
         return totalJoltage
+    }
+
+    private fun joltageStartIdx(idx: Int, bankLength: Int, batteries: Int): Int {
+        return maxOf(0, idx - bankLength + batteries)
+    }
+
+    private fun resetJoltageCountersFrom(joltage: MutableList<Char>, idx: Int) {
+        for (i in idx..<joltage.size) {
+            joltage[i] = '0'
+        }
     }
 }
