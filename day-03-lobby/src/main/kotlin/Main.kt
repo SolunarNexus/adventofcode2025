@@ -1,13 +1,16 @@
 package org.example
 
 fun main() {
-    val solution = Solution(test = false)
+    val test = true
+    val inputPath = if (test) "day-03-lobby/src/main/resources/test_input.txt" else "day-03-lobby/src/main/resources/input.txt"
+
+    val solution = Solution(inputPath)
     val part1 = solution.totalJoltage(2)
     val part2 = solution.totalJoltage(12)
     println("Part 1 total joltage is $part1")
     println("Part 2 total joltage is $part2")
 
-    if (solution.isTest) {
+    if (test) {
         assertResults(357L, part1, "one")
         assertResults(3121910778619L, part2, "two")
         println("Solution verified for TEST")

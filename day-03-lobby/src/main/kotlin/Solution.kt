@@ -3,17 +3,14 @@ package org.example
 import java.io.File
 
 class Solution {
-    val inputPath = "day-03-lobby/src/main/resources/input.txt"
-    val testInputPath = "day-03-lobby/src/main/resources/test_input.txt"
-    var isTest: Boolean
+    val inputPath: String
 
-    constructor(test: Boolean = false) {
-        if (test) println("### Initializing TEST solution ###") else println("### Initializing PROD solution ###")
-        this.isTest = test
+    constructor(inputPath: String) {
+        this.inputPath = inputPath
     }
 
     fun totalJoltage(batteries: Int): Long {
-        val inputPath: String = if (isTest) testInputPath else inputPath
+        val inputPath: String = inputPath
         val banks = File(inputPath).inputStream().bufferedReader().readLines()
         var totalJoltage = 0L
 
