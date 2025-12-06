@@ -17,7 +17,7 @@ class Solution {
                 val idValue = id.toString()
                 val idLength = idValue.length
 
-                if (idLength % 2 == 0 && idValue.take(idLength / 2) == idValue.substring(idLength / 2)) {
+                if (idLength % 2 == 0 && containsEqualSequences(idValue, idLength / 2)) {
                     ids += id
                 }
             }
@@ -49,6 +49,7 @@ class Solution {
     }
 
     fun containsEqualSequences(id: String, offset: Int): Boolean {
+        if (offset == 0) return false
         var seqStart = 0
 
         while (seqStart + 2 * offset - 1 < id.length) {
@@ -64,6 +65,4 @@ class Solution {
 
         return true
     }
-
-    fun sumOfInvalidIDs(): Long = idsOfMultipleEqualSequences().sum()
 }
