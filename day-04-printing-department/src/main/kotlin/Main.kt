@@ -1,26 +1,31 @@
 package org.example
 
+import java.io.File
+
 fun main() {
-    val test = true
-    val inputPath = if (test) "day-03-lobby/src/main/resources/test_input.txt" else "day-03-lobby/src/main/resources/input.txt"
+    val test = false
+    val inputPath =
+        if (test) "day-04-printing-department/src/main/resources/test_input.txt"
+        else "day-04-printing-department/src/main/resources/input.txt"
 
     val solution = Solution(inputPath)
-//    val part1 = ...
+    val part1 = solution.accessibleRolls()
+    println(File(inputPath).readText())
+    println("Part 1: accessible rolls = $part1")
 //    val part2 = ...
-//    println("Part 1 $part1")
 //    println("Part 2 $part2")
 
     if (test) {
+        assertResults(13, part1, "Incorrect accessible rolls count for part one")
 //        assertResults(...)
-//        assertResults(...)
-//        println("Solution verified for TEST")
+        println("Solution verified for TEST")
     } else {
+        assertResults(1527, part1, "Incorrect accessible rolls count for part one")
 //        assertResults(...)
-//        assertResults(...)
-//        println("Solution verified for PROD")
+        println("Solution verified for PROD")
     }
 }
 
-fun assertResults(expected: Long, actual: Long, part: String){
-    assert(expected == actual, { "Incorrect total joltage for part $part. Was $actual, expected $expected" })
+fun assertResults(expected: Int, actual: Int, message: String) {
+    assert(expected == actual, { "$message. Was $actual, expected $expected" })
 }
