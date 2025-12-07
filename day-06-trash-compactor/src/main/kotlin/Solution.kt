@@ -13,13 +13,12 @@ class Solution {
         this.operations = input.last().trim().split("\\s+".toRegex())
     }
 
-    fun answers(): List<Long> {
+    fun answersWithSimpleMath(): List<Long> {
         val worksheet = input.dropLast(1).flatMap { row ->
             row.trim().split("""\s+""".toRegex()).withIndex()
         }.groupBy({ it.index }, { it.value.toLong() })
 
         val answers = solveProblems(worksheet)
-
         println("Answers to problems are: ${answers.joinToString(", ")}")
         return answers
     }
