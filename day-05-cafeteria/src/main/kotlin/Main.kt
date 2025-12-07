@@ -5,18 +5,18 @@ fun main() {
     val inputPath = if (test) "day-05-cafeteria/src/main/resources/test_input.txt" else "day-05-cafeteria/src/main/resources/input.txt"
 
     val solution = Solution(inputPath)
-    val part1 = solution.freshIngredientsCount()
-//    val part2 = solution.totalJoltage(12)
-    println("Part 1: fresh ingredients count is $part1")
-//    println("Part 2 total joltage is $part2")
+    val part1 = solution.availableFreshIngredientsCount()
+    val part2 = solution.allFreshIngredientsIdsCount()
+    println("Part 1: available fresh ?ingredients count is $part1")
+    println("Part 2: all fresh ingredients IDs count is $part2")
 
     if (test) {
-        assertResults(3, part1, "one")
-//        assertResults(3121910778619L, part2, "two")
+        assertResults(3, part1, "Incorrect available fresh ingredients count for part one")
+        assertResults(14, part2, "Incorrect all possible fresh ingredients IDs count for part two")
         println("Solution verified for TEST")
     } else {
-        assertResults(661, part1, "one")
-//        assertResults(169709990062889L, part2, "two")
+        assertResults(661, part1, "Incorrect available fresh ingredients count for part one")
+        assertResults(359526404143208L, part2, "Incorrect all possible fresh ingredients IDs count for part two")
         println("Solution verified for PROD")
     }
 }
