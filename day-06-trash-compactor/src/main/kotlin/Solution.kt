@@ -4,34 +4,34 @@ import java.io.File
 
 class Solution {
     val inputPath: String
+    val input: List<String>
+    val operations: List<String>
 
     constructor(inputPath: String) {
         this.inputPath = inputPath
+        this.input = File(inputPath).inputStream().bufferedReader().readLines()
+        this.operations = input.last().trim().split("\\s+".toRegex())
     }
 
     fun answers(): List<Long> {
-        val lines = File(inputPath).inputStream().bufferedReader().readLines()
-            .map { it.trim().split("\\s+".toRegex()) }
-        val worksheet = lines.dropLast(1)
-        val operations = lines.last()
-        val answers = mutableListOf<Long>()
+        val worksheet = input.dropLast(1).flatMap { row ->
+            row.trim().split("""\s+""".toRegex()).withIndex()
+        }.groupBy({ it.index }, { it.value.toLong() })
 
-        for (i in 0..<worksheet.first().size) {
-            if (operations[i] == "+") {
-                answers.add(worksheet.sumOf { it[i].toLong() })
-            } else if (operations[i] == "*") {
-                answers.add(worksheet.fold(1L) { acc, row -> acc * row[i].toLong() })
+        val answers = operations.withIndex().map { (index, symbol) ->
+            worksheet.getValue( index ).reduce { a, b ->
+                if (symbol == "*") a * b
+                else a + b
             }
         }
+
         println("Answers to problems are: ${answers.joinToString(", ")}")
         return answers
     }
 
     fun answersWithCephalopodMath(): List<Long> {
-        val lines = File(inputPath).inputStream().bufferedReader().readLines()
-        val operations = lines.last().trim().split("\\s+".toRegex())
-        val numbers = lines.first().indices
-            .map { lines.columnAsLongOrNull(it) }
+        val numbers = input.first().indices
+            .map { input.columnAsLongOrNull(it) }
             .fold(mutableListOf(mutableListOf<Long>())) { carry, maybeNumbers ->
                 when (maybeNumbers) {
                     null -> carry.apply { add(mutableListOf()) }
