@@ -13,7 +13,7 @@
         <module>day-02-gift-shop</module>
         <module>day-03-lobby</module>
         <module>day-04-printing-department</module>
-        <module>day-04-cafeteria</module>
+        <module>day-05-cafeteria</module>
     </modules>
 
     <properties>
