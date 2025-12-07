@@ -18,19 +18,14 @@ class Solution {
             row.trim().split("""\s+""".toRegex()).withIndex()
         }.groupBy({ it.index }, { it.value.toLong() })
 
-        val answers = operations.withIndex().map { (index, symbol) ->
-            worksheet.getValue( index ).reduce { a, b ->
-                if (symbol == "*") a * b
-                else a + b
-            }
-        }
+        val answers = solveProblems(worksheet)
 
         println("Answers to problems are: ${answers.joinToString(", ")}")
         return answers
     }
 
     fun answersWithCephalopodMath(): List<Long> {
-        val numbers = input.first().indices
+        val worksheet = input.first().indices
             .map { input.columnAsLongOrNull(it) }
             .fold(mutableListOf(mutableListOf<Long>())) { carry, maybeNumbers ->
                 when (maybeNumbers) {
@@ -39,15 +34,18 @@ class Solution {
                 }
             }.mapIndexed { index, list -> index to list }.toMap()
 
-        val answers = operations.withIndex().map { (index, symbol) ->
-            numbers.getValue(index).reduce { a, b ->
+        val answers = solveProblems(worksheet)
+        println("Answers to problems are: ${answers.joinToString(", ")}")
+        return answers
+    }
+
+    private fun solveProblems(problems: Map<Int, List<Long>>): List<Long> =
+        operations.withIndex().map { (index, symbol) ->
+            problems.getValue(index).reduce { a, b ->
                 if (symbol == "*") a * b
                 else a + b
             }
         }
-        println("Answers to problems are: ${answers.joinToString(", ")}")
-        return answers
-    }
 
     private fun List<String>.columnAsLongOrNull(column: Int): Long? =
         dropLast(1).map { row -> row[column] }.joinToString("").trim().toLongOrNull()
