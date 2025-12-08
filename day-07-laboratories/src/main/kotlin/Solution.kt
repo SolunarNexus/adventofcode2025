@@ -38,17 +38,17 @@ class Solution {
         }
     }
 
-    private fun propagateQuantumBeam(manifold: List<String>, table: MutableMap<Pair<Int, Int>, Long>, x: Int, y: Int): Long {
+    private fun propagateQuantumBeam(manifold: List<String>, cache: MutableMap<Pair<Int, Int>, Long>, x: Int, y: Int): Long {
         if (y >= manifold.size) return 1
 
         return when (manifold[y][x]) {
-            '.' -> propagateQuantumBeam(manifold, table, x, y + 1)
+            '.' -> propagateQuantumBeam(manifold, cache, x, y + 1)
             '^' -> {
                 val key = Pair(x, y)
-                if (!table.contains(key)){
-                    table[key] = propagateQuantumBeam(manifold, table, x - 1, y) + propagateQuantumBeam(manifold, table, x + 1, y)
+                if (!cache.contains(key)){
+                    cache[key] = propagateQuantumBeam(manifold, cache, x - 1, y) + propagateQuantumBeam(manifold, cache, x + 1, y)
                 }
-                table[key]!!
+                cache[key]!!
             }
             else -> throw IllegalArgumentException("Invalid character: ${manifold[y][x]}")
         }
