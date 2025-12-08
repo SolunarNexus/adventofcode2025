@@ -6,18 +6,18 @@ fun main() {
 
     val solution = Solution(inputPath)
     val part1 = solution.beamSplitSum()
-//    val part2 = solution.answersWithCephalopodMath().sum()
+    val part2 = solution.quantumBeamSplitSum()
     println("Part 1: tachyon beam splits ${part1}x")
-//    println("Part 2: the grand total of all the answers applying cephalopod math is $part2")
+    println("Part 2: quantum tachyon beam splits ${part2}x")
 
     if (test) {
         assertResults(21, part1, "Incorrect beam split count for part one")
-//        assertResults(6171290547579L, part2, "Incorrect grand total for part two")
+        assertResults(40L, part2, "Incorrect grand total for part two")
         println("Solution verified for TEST")
     } else {
         assertResults(1524, part1, "Incorrect beam split count for part one")
-//        assertResults(8811937976367L, part2, "Incorrect grand total for part two")
-//        println("Solution verified for PROD")
+        assertResults(32982105837605L, part2, "Incorrect grand total for part two")
+        println("Solution verified for PROD")
     }
 }
 

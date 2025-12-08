@@ -17,6 +17,13 @@ class Solution {
         return result
     }
 
+    fun quantumBeamSplitSum(): Long {
+        val (startX, startY) = Pair(input[0].indexOf('S'), 1)
+        val table: MutableMap<Pair<Int, Int>, Long> = mutableMapOf()
+        val result = propagateQuantumBeam(input, table, startX, startY)
+        return result
+    }
+
     private fun propagateBeam(manifold: MutableList<String>, x: Int, y: Int): Int {
         if (y >= manifold.size) return 0
 
@@ -26,7 +33,23 @@ class Solution {
                 manifold[y] = manifold[y].withIndex().map { (idx, it) -> if (idx == x) '|' else it }.joinToString("")
                 return propagateBeam(manifold, x, y + 1)
             }
-            '^' -> return  1 + propagateBeam(manifold, x - 1, y) + propagateBeam(manifold, x + 1, y)
+            '^' -> return 1 + propagateBeam(manifold, x - 1, y) + propagateBeam(manifold, x + 1, y)
+            else -> throw IllegalArgumentException("Invalid character: ${manifold[y][x]}")
+        }
+    }
+
+    private fun propagateQuantumBeam(manifold: List<String>, table: MutableMap<Pair<Int, Int>, Long>, x: Int, y: Int): Long {
+        if (y >= manifold.size) return 1
+
+        return when (manifold[y][x]) {
+            '.' -> propagateQuantumBeam(manifold, table, x, y + 1)
+            '^' -> {
+                val key = Pair(x, y)
+                if (!table.contains(key)){
+                    table[key] = propagateQuantumBeam(manifold, table, x - 1, y) + propagateQuantumBeam(manifold, table, x + 1, y)
+                }
+                table[key]!!
+            }
             else -> throw IllegalArgumentException("Invalid character: ${manifold[y][x]}")
         }
     }
