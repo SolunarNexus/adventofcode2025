@@ -19,8 +19,8 @@ class Solution {
 
     fun quantumBeamSplitSum(): Long {
         val (startX, startY) = Pair(input[0].indexOf('S'), 1)
-        val table: MutableMap<Pair<Int, Int>, Long> = mutableMapOf()
-        val result = propagateQuantumBeam(input, table, startX, startY)
+        val cache: MutableMap<Pair<Int, Int>, Long> = mutableMapOf()
+        val result = propagateQuantumBeam(input, cache, startX, startY)
         return result
     }
 
