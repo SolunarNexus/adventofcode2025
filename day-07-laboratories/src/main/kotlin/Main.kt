@@ -2,7 +2,8 @@ package org.example
 
 fun main() {
     val test = false
-    val inputPath = if (test) "day-07-laboratories/src/main/resources/test_input.txt" else "day-07-laboratories/src/main/resources/input.txt"
+    val inputPath =
+        if (test) "day-07-laboratories/src/main/resources/test_input.txt" else "day-07-laboratories/src/main/resources/input.txt"
 
     val solution = Solution(inputPath)
     val part1 = solution.beamSplitSum()
