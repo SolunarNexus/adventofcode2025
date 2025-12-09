@@ -17,7 +17,7 @@ class Solution {
         this.input = File(inputPath).inputStream().bufferedReader().readLines()
     }
 
-    fun circuits(connectionsAvailable: Int = 10) = computeCircuits(coordinates(), connectionsAvailable)
+    fun circuits(connectionsAvailable: Int) = computeCircuits(coordinates(), connectionsAvailable)
 
     private fun allConnections(coordinates: List<Coordinate>): List<Connection> =
         coordinates.flatMapIndexed { i, coord ->
@@ -29,6 +29,7 @@ class Solution {
         Triple(x, y, z)
     }
 
+    // Compute Euclidean distance between two points in 3D space
     private fun distance(connection: Connection): Double {
         val (a, b, c) = connection.first
         val (x, y, z) = connection.second
@@ -38,20 +39,11 @@ class Solution {
     private fun computeDistances(connections: List<Connection>): List<Pair<Connection, Double>> =
         connections.map { Pair(it, distance(it)) }
 
+    
     private fun insertIntoCircuit(connection: Connection, circuits: MutableList<Circuit>) {
-        val (posA, posB) = connection
-
-        if (circuits.any { it.contains(posA) && it.contains(posB) }) {
-            return
-        } else if (circuits.any { it.contains(posA) } && circuits.none { it.contains(posB) }) {
-            val target = circuits.indexOfFirst { it.contains(posA) }
-            circuits[target] += posB
-        } else if (circuits.any { it.contains(posB) } && circuits.none { it.contains(posA) }) {
-            val target = circuits.indexOfFirst { it.contains(posB) }
-            circuits[target] += posA
-        } else {
-            val circuitA = circuits.indexOfFirst { it.contains(posA) }
-            val circuitB = circuits.indexOfFirst { it.contains(posB) }
+        if (circuits.hasMergableCircuitWith(connection)) {
+            val circuitA = circuits.indexOfFirst { it.contains(connection.first) }
+            val circuitB = circuits.indexOfFirst { it.contains(connection.second) }
             circuits[circuitA] = circuits[circuitA] + circuits[circuitB]
             circuits.removeAt(circuitB)
         }
@@ -67,4 +59,8 @@ class Solution {
 
         return circuits
     }
+
+    // Extension
+    private fun List<Circuit>.hasMergableCircuitWith(connection: Connection) =
+        !any { it.contains(connection.first) && it.contains(connection.second) }
 }
