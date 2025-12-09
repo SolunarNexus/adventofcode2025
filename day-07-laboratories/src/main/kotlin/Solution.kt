@@ -47,15 +47,9 @@ class Solution {
             '.' -> propagateQuantumBeam(manifold, cache, x, y + 1)
             '^' -> {
                 val key = Pair(x, y)
-                if (!cache.contains(key)) {
-                    cache[key] = propagateQuantumBeam(manifold, cache, x - 1, y) + propagateQuantumBeam(
-                        manifold,
-                        cache,
-                        x + 1,
-                        y
-                    )
+                cache.getOrPut(key) {
+                    propagateQuantumBeam(manifold, cache, x - 1, y) + propagateQuantumBeam(manifold, cache, x + 1, y)
                 }
-                cache[key]!!
             }
 
             else -> throw IllegalArgumentException("Invalid character: ${manifold[y][x]}")
