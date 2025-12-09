@@ -19,6 +19,8 @@ class Solution {
 
     fun circuits(connectionsAvailable: Int) = computeCircuits(coordinates(), connectionsAvailable)
 
+    fun superCircuit() = computeCircuit(coordinates())
+
     private fun allConnections(coordinates: List<Coordinate>): List<Connection> =
         coordinates.flatMapIndexed { i, coord ->
             coordinates.drop(i + 1).map { other -> Pair(coord, other) }
@@ -39,7 +41,6 @@ class Solution {
     private fun computeDistances(connections: List<Connection>): List<Pair<Connection, Double>> =
         connections.map { Pair(it, distance(it)) }
 
-    
     private fun insertIntoCircuit(connection: Connection, circuits: MutableList<Circuit>) {
         if (circuits.hasMergableCircuitWith(connection)) {
             val circuitA = circuits.indexOfFirst { it.contains(connection.first) }
@@ -56,8 +57,20 @@ class Solution {
         for (connection in distances.map { it.first }.take(connectionsAvailable)) {
             insertIntoCircuit(connection, circuits)
         }
-
         return circuits
+    }
+
+    private fun computeCircuit(coordinates: List<Coordinate>): Pair<List<Circuit>, Connection> {
+        val distances = computeDistances(allConnections(coordinates)).sortedBy { it.second }
+        val circuits = coordinates.map { listOf(it) }.toMutableList()
+        val iterator = distances.map { it.first }.iterator()
+        var connection: Connection = iterator.next()
+
+        while (iterator.hasNext() && circuits.size > 1) {
+            connection = iterator.next()
+            insertIntoCircuit(connection, circuits)
+        }
+        return Pair(circuits, connection)
     }
 
     // Extension
