@@ -11,6 +11,12 @@ class Solution {
         this.input = File(inputPath).inputStream().bufferedReader().readLines()
     }
 
-    fun coordinates(): List<Coordinate> =
-        input.map { Pair(it.substringBefore(',').toInt(), it.substringAfter(',').toInt()) }
+    fun coordinates(): List<Coordinate> = input.map { line ->
+        val (x, y) = line.split(',').map { it.toInt() }
+        Pair(x, y)
+    }
+
+    fun possibleCorners(coordinates: List<Coordinate>): List<Coordinate> {
+        return emptyList()
+    }
 }
