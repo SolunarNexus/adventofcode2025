@@ -1,11 +1,13 @@
 package org.example
 
 fun main() {
-    val test = false
+    val test = true
     val inputPath =
-        if (test) "day-09-movie-theater/src/main/resources/test_input.txt" else "day-09-movie-theater/src/main/resources/input.txt"
+        if (test) "day-09-movie-theatre/src/main/resources/test_input.txt" else "day-09-movie-theatre/src/main/resources/input.txt"
 
-//    val solution = Solution(inputPath)
+    val solution = Solution(inputPath)
+    val coords = solution.coordinates()
+    coords.forEach { println(it) }
 //    val part1 = solution.circuits(connectionsAvailable)
 //    val part2 = solution.superCircuit()
 //    println("Part 1: product of the first three biggest circuits = $sizes")
