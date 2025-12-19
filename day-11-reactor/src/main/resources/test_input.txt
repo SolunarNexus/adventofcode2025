@@ -8,3 +8,16 @@ fff: out
 ggg: out
 hhh: ccc fff iii
 iii: out
+    svr: xxx yyy
+xxx: fft
+fft: zzz
+yyy: tty
+tty: zzz
+zzz: 111 222
+111: hub
+hub: 333
+222: dac
+dac: 333
+333: 444 555
+444: out
+555: out
