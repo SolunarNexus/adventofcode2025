@@ -20,6 +20,7 @@
         <module>day-09-movie-theatre</module>
         <module>day-10-factory</module>
 	    <module>day-11-reactor</module>
+	    <module>day-12-tree-farm</module>
     </modules>
 
     <properties>
